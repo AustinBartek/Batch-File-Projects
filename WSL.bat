@@ -1,3 +1,3 @@
 @ECHO OFF
-CD C:\Users\Austin\Desktop
+cd C:/Users/austi/OneDrive/Desktop
 wsl.exe

@@ -28,7 +28,6 @@ goto:doMoreActions
 if "%keep%" NEQ "y" goto eof
 
 ::getting user decision
-
 set /p "input={0: WSL Terminal; 1: Current Java Project; 2: Set New Java Project} :: " || set input=Nothing Chosen
 set input=%input:&=%
 set input=%input:"=%
@@ -36,7 +35,7 @@ set input=%input:"=%
 if "%input%"=="0" goto wsl
 if "%input%"=="1" goto project
 if "%input%"=="2" goto newProject
-exit
+exit /b
 
 :wsl
 cd C:\Users\Austin\Desktop
@@ -44,11 +43,11 @@ start wsl.exe
 exit
 
 :project
-start "" "C:\Users\Austin\AppData\Local\Programs\Microsoft VS Code\Code.exe" "C:\Users\Austin\Desktop\Java Projects\%projectFile%"
+start "" "C:\Users\austi\AppData\Local\Programs\Microsoft VS Code\Code.exe" "C:\Users\austi\OneDrive\Desktop\Java Projects\%projectFile%"
 exit
 
 :newProject
-cd "C:\Users\Austin\Desktop\Java Projects"
+cd "C:/Users/austi/OneDrive/Desktop/Java Projects"
 cls
 
 ::lists out all files with numbers in order to allow setting of new project file
@@ -63,29 +62,29 @@ for /f "tokens=*" %%G in ('dir /a:d-h /b') do (
 call :incAndCheckCount "%%G"
 )
 
-if defined newFile (goto setProject) else (goto eof)
+if defined newFile (goto setProject) else (exit /b)
 
 
 
 :incAndCheckCount
 if %count%==%fileNum% set newFile=%1
 set /a count+=1
-goto:eof
+exit /b
 
 :incAndEchoCount
 echo %count% : %1
 set /a count+=1
-goto:eof
+exit /b
 
 :setProject
 set newFile=%newFile:&=%
 set newFile=%newFile:"=%
-cd "C:\Users\Austin\Desktop\Batch Shortcuts\Welcome Menu"
-echo %newFile% > project.txt
+echo %newFile% > "C:\Users\austi\OneDrive\Desktop\Batch-File-Projects\Welcome Menu\project.txt"
 set projectFile=%newFile%
 echo Set Current Project as %newFile%
 goto:askToContinue
 
 :askToContinue
+cls
 set /p "keep=Continue? (y | n) :: " || keep=n
-goto doMoreActions
+goto:doMoreActions
